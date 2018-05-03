@@ -11,8 +11,8 @@ namespace symath {
     public:
         T operator () (const T& arg) const;
     public:
-        static UnaryFunction<T> None;
-        static UnaryFunction<T> Negate;
+        static const UnaryFunction<T> None;
+        static const UnaryFunction<T> Negate;
     public:
         UnaryFunction(const UnaryFunctionType type);
     private:
@@ -38,8 +38,8 @@ namespace symath {
     }
 
     template <typename T>
-    UnaryFunction<T> UnaryFunction<T>::None(UnaryFunctionType::None);
+    const UnaryFunction<T> UnaryFunction<T>::None(UnaryFunctionType::None);
 
     template <typename T>
-    UnaryFunction<T> UnaryFunction<T>::Negate(UnaryFunctionType::Negate);
+    const UnaryFunction<T> UnaryFunction<T>::Negate(UnaryFunctionType::Negate);
 }

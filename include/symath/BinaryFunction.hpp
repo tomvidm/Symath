@@ -4,7 +4,11 @@ namespace symath {
     enum class BinaryFunctionType {
         None,
         Add,
-        Subtract
+        Subtract,
+        Multiply,
+        Divide,
+        Power,
+        ModularPower
     };
 
     template <typename T>
@@ -12,9 +16,9 @@ namespace symath {
     public:
         T operator () (const T& arg1, const T& arg2) const;
     public:
-        static BinaryFunction<T> None;
-        static BinaryFunction<T> Add;
-        static BinaryFunction<T> Subtract;
+        static const BinaryFunction<T> None;
+        static const BinaryFunction<T> Add;
+        static const BinaryFunction<T> Subtract;
     public:
         BinaryFunction(const BinaryFunctionType type);
     private:
@@ -42,11 +46,11 @@ namespace symath {
     }
 
     template <typename T>
-    BinaryFunction<T> BinaryFunction<T>::None(BinaryFunctionType::None);
+    const BinaryFunction<T> BinaryFunction<T>::None(BinaryFunctionType::None);
 
     template <typename T>
-    BinaryFunction<T> BinaryFunction<T>::Add(BinaryFunctionType::Add);
+    const BinaryFunction<T> BinaryFunction<T>::Add(BinaryFunctionType::Add);
 
     template <typename T>
-    BinaryFunction<T> BinaryFunction<T>::Subtract(BinaryFunctionType::Subtract);
+    const BinaryFunction<T> BinaryFunction<T>::Subtract(BinaryFunctionType::Subtract);
 }

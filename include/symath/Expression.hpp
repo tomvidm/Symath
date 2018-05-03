@@ -26,19 +26,19 @@ namespace symath {
     public:
         Expression();
         Expression(const T& val);
-        Expression(Expression<T>::shared expr, UnaryFunction<T>& func);
-        Expression(Expression<T>::shared expr1, Expression<T>::shared expr2, BinaryFunction<T>& func);
+        Expression(Expression<T>::shared expr, const UnaryFunction<T>& func);
+        Expression(Expression<T>::shared expr1, Expression<T>::shared expr2, const BinaryFunction<T>& func);
         ~Expression();
     private:
         union {
             struct {
                 std::shared_ptr<Expression<T>> arg;
-                UnaryFunction<T>& function;
+                const UnaryFunction<T>& function;
             } unary;
             struct {
                 std::shared_ptr<Expression<T>> arg1;
                 std::shared_ptr<Expression<T>> arg2;
-                BinaryFunction<T>& function;
+                const BinaryFunction<T>& function;
             } binary;
             T variableValue;
             const T constantValue;
@@ -52,7 +52,7 @@ namespace symath {
     };
 
     template <typename T>
-    Expression<T>::Expression(Expression<T>::shared expr, UnaryFunction<T>& func)
+    Expression<T>::Expression(Expression<T>::shared expr, const UnaryFunction<T>& func)
     : unary{expr, func},
       type(ExpressionType::UnaryFunction),
       hasCachedValue(false) {
@@ -60,7 +60,7 @@ namespace symath {
     }
 
     template <typename T>
-    Expression<T>::Expression(Expression<T>::shared expr1, Expression<T>::shared expr2, BinaryFunction<T>& func)
+    Expression<T>::Expression(Expression<T>::shared expr1, Expression<T>::shared expr2, const BinaryFunction<T>& func)
     : binary{expr1, expr2, func}, 
       type(ExpressionType::BinaryFunction),
       hasCachedValue(false) {
