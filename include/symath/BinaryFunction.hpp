@@ -19,6 +19,8 @@ namespace symath {
         static const BinaryFunction<T> None;
         static const BinaryFunction<T> Add;
         static const BinaryFunction<T> Subtract;
+        static const BinaryFunction<T> Multiply;
+        static const BinaryFunction<T> Divide;
     public:
         BinaryFunction(const BinaryFunctionType type);
     private:
@@ -34,6 +36,10 @@ namespace symath {
                 return arg1 + arg2;
             case BinaryFunctionType::Subtract:
                 return arg1 - arg2;
+            case BinaryFunctionType::Multiply:
+                return arg1 * arg2;
+            case BinaryFunctionType::Divide:
+                return arg1 / arg2;
             default:
                 return arg1;
         }
@@ -53,4 +59,10 @@ namespace symath {
 
     template <typename T>
     const BinaryFunction<T> BinaryFunction<T>::Subtract(BinaryFunctionType::Subtract);
+
+    template <typename T>
+    const BinaryFunction<T> BinaryFunction<T>::Multiply(BinaryFunctionType::Multiply);
+
+    template <typename T>
+    const BinaryFunction<T> BinaryFunction<T>::Divide(BinaryFunctionType::Divide);
 }

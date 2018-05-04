@@ -19,17 +19,17 @@ namespace symath {
     class Expression {
     public:
         using shared = std::shared_ptr<Expression<T>>;
-
-        const ExpressionType getExpressionType() const;
-
-        const T calculate() const;
     public:
         Expression();
         Expression(const T& val);
+        Expression(const Expression<T>& other); // TODO: Copy constructor does not copy all. (How to copy const values inside union?)
         Expression(Expression<T>::shared expr, const UnaryFunction<T>& func);
         Expression(Expression<T>::shared expr1, Expression<T>::shared expr2, const BinaryFunction<T>& func);
         ~Expression();
-    private:
+
+        const ExpressionType getExpressionType() const;
+        const T calculate() const;
+    protected:
         union {
             struct {
                 std::shared_ptr<Expression<T>> arg;
@@ -55,7 +55,7 @@ namespace symath {
     Expression<T>::Expression(Expression<T>::shared expr, const UnaryFunction<T>& func)
     : unary{expr, func},
       type(ExpressionType::UnaryFunction),
-      hasCachedValue(false) {
+      hasCachedValue(false) {  
         ;
     }
 
@@ -116,7 +116,17 @@ namespace symath {
       hasCachedValue(false) {
           ;
     }
+    template <typename T>
+    Expression<T>::Expression(const Expression<T>& other)
+    : 
+      type(other.type),
+      hasCachedValue(other.hasCachedValue) {
 
+    }
+/*
+    template <typename T>
+    Expression<T>::Expression(const Expression<T>::shared& otherPtr);
+ */
     template <typename T>
     Expression<T>::~Expression() {
         switch (type) {
@@ -130,5 +140,20 @@ namespace symath {
             default:
                 break;  
         }
+    }
+
+    template <typename T>
+    bool operator == (const Expression<T>& lhs, const T rhs) {
+        return lhs.calculate() == rhs;
+    }
+
+    template <typename T>
+    bool operator == (const T lhs, const Expression<T>& rhs) {
+        return lhs.calculate() == rhs;
+    }
+
+    template <typename T>
+    bool operator == (const Expression<T>& lhs, const Expression<T>& rhs) {
+        return lhs.calculate() == rhs.calculate();
     }
 }

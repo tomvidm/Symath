@@ -7,6 +7,7 @@ set(TEST_SOURCES
     TrivialTest.cpp
     parser/TestOperator.cpp
     symath/TestExpression.cpp
+    symath/TestExpressionBuilder.cpp
     symath/TestUnaryFunction.cpp
     symath/TestBinaryFunction.cpp
 )
